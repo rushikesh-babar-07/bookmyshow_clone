@@ -49,7 +49,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
 
-      <main className="container mx-auto px-4 -mt-16 relative z-10">
+      <main className="container mx-auto px-4 sm:px-6 -mt-16 relative z-10 pb-8">
         <FilterBar
           selectedGenres={selectedGenres}
           selectedLanguages={selectedLanguages}

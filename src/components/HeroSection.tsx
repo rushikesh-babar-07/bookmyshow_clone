@@ -4,11 +4,14 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
-      <img
+    <section className="relative h-[80vh] md:h-[85vh] min-h-[550px] overflow-hidden">
+      <motion.img
         src={heroBg}
         alt="Cinema"
         className="absolute inset-0 w-full h-full object-cover"
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
       />
       <div className="hero-overlay absolute inset-0" />
 
