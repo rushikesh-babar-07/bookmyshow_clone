@@ -24,7 +24,7 @@ const FilterBar = ({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="glass-card p-5 mb-10"
+      className="glass-card p-5 sm:p-6 mb-12"
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 text-foreground">
