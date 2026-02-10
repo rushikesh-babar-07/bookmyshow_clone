@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Ticket } from "lucide-react";
+import { Star, Ticket, Film } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Movie } from "@/data/movies";
 
@@ -10,6 +10,13 @@ const getRatingClass = (rating: number) => {
   return "rating-low";
 };
 
+const fallbackGradients = [
+  "from-primary/30 via-card to-card",
+  "from-accent/20 via-card to-card",
+  "from-secondary via-card/90 to-card",
+  "from-primary/20 via-accent/10 to-card",
+];
+
 interface MovieCardProps {
   movie: Movie;
   index: number;
@@ -17,6 +24,8 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie, index }: MovieCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const gradient = fallbackGradients[movie.id % fallbackGradients.length];
 
   return (
     <motion.div
@@ -31,26 +40,49 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
         {/* Poster */}
         <div className="relative aspect-[2/3] overflow-hidden">
           {/* Loading skeleton */}
-          {!imageLoaded && (
+          {!imageLoaded && !imageError && (
             <div className="absolute inset-0 z-10">
               <Skeleton className="w-full h-full rounded-none bg-muted/60" />
               <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent" />
             </div>
           )}
-          <img
-            src={movie.poster}
-            alt={movie.title}
-            className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
-              imageLoaded ? "opacity-100" : "opacity-0"
-            }`}
-            loading="lazy"
-            onLoad={() => setImageLoaded(true)}
-          />
+
+          {/* Fallback poster */}
+          {imageError && (
+            <div className={`absolute inset-0 z-10 bg-gradient-to-b ${gradient} flex flex-col items-center justify-center p-4 text-center gap-3`}>
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Film className="w-6 h-6 text-primary" />
+              </div>
+              <h4 className="font-display font-semibold text-foreground text-sm leading-snug line-clamp-2">
+                {movie.title}
+              </h4>
+              <div className="flex flex-wrap justify-center gap-1">
+                {movie.genre.map((g) => (
+                  <span key={g} className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-secondary/80 text-secondary-foreground uppercase tracking-wide">
+                    {g}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!imageError && (
+            <img
+              src={movie.poster}
+              alt={movie.title}
+              className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              loading="lazy"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
 
           {/* Rating Badge */}
           <motion.div
-            className="absolute top-3 right-3"
+            className="absolute top-3 right-3 z-20"
             whileHover={{ scale: 1.1 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
           >
@@ -61,7 +93,7 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
           </motion.div>
 
           {/* Book Button on hover */}
-          <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+          <div className="absolute bottom-4 left-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
             <button className="w-full gold-gradient text-primary-foreground py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg">
               <Ticket className="w-4 h-4" />
               Book Tickets
