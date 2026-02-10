@@ -32,10 +32,10 @@ const HeroSection = () => {
           </div>
 
           <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-4 leading-tight">
-            Dune: Part Three
+            Dune: Part Two
           </h1>
           <p className="text-muted-foreground text-lg mb-8 max-w-lg">
-            The epic conclusion to the saga. Paul Atreides unites with the Fremen to take on the galaxy's most powerful forces.
+            Paul Atreides unites with the Fremen to take on the galaxy's most powerful forces in this epic continuation of the saga.
           </p>
 
           <div className="flex items-center gap-4">
