@@ -1,9 +1,11 @@
-import { Search, Ticket } from "lucide-react";
+import { Search, Ticket, LogOut } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <motion.nav
@@ -49,9 +51,15 @@ const Navbar = () => {
               />
             )}
           </motion.div>
-          <button className="gold-gradient text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity hidden sm:block">
-            Sign In
-          </button>
+          {user && (
+            <button
+              onClick={signOut}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
+          )}
         </div>
       </div>
     </motion.nav>
