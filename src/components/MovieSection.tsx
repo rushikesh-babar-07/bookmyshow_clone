@@ -18,7 +18,7 @@ const MovieSection = ({ title, subtitle, movies }: MovieSectionProps) => {
   }
 
   return (
-    <section className="mb-20">
+    <section className="mb-28">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
