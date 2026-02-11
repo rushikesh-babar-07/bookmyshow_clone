@@ -1,4 +1,5 @@
-import { Search, Ticket, LogOut } from "lucide-react";
+import { Search, Ticket, LogOut, UserCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
@@ -6,6 +7,15 @@ import { useAuth } from "@/contexts/AuthContext";
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
+  const initials = displayName.slice(0, 2).toUpperCase();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/auth");
+  };
 
   return (
     <motion.nav
@@ -51,13 +61,30 @@ const Navbar = () => {
               />
             )}
           </motion.div>
-          {user && (
+          {user ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary">
+                <div className="w-7 h-7 rounded-full gold-gradient flex items-center justify-center text-primary-foreground text-xs font-bold">
+                  {initials}
+                </div>
+                <span className="hidden sm:inline text-sm font-medium text-foreground max-w-[100px] truncate">
+                  {displayName}
+                </span>
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-destructive/20 transition-colors"
+                title="Sign out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
             <button
-              onClick={signOut}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm transition-colors"
+              onClick={() => navigate("/auth")}
+              className="gold-gradient text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity"
             >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Sign Out</span>
+              Sign In
             </button>
           )}
         </div>
