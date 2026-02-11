@@ -94,7 +94,7 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
 
           {/* Book Button on hover */}
           <div className="absolute bottom-4 left-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-            <button className="w-full gold-gradient text-primary-foreground py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg">
+            <button className="w-full gold-gradient text-primary-foreground py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg">
               <Ticket className="w-4 h-4" />
               Book Tickets
             </button>

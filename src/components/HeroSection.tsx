@@ -39,11 +39,11 @@ const HeroSection = () => {
           </p>
 
           <div className="flex items-center gap-4">
-            <button className="gold-gradient text-primary-foreground px-8 py-3 rounded-full text-base font-semibold hover:opacity-90 transition-all glow-gold flex items-center gap-2">
+            <button className="gold-gradient text-primary-foreground px-8 py-3 rounded-full text-base font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 glow-gold flex items-center gap-2">
               <Ticket className="w-5 h-5" />
               Book Tickets
             </button>
-            <button className="glass-card px-6 py-3 rounded-full text-foreground text-base font-medium hover:bg-card/80 transition-all flex items-center gap-2">
+            <button className="glass-card px-6 py-3 rounded-full text-foreground text-base font-medium hover:bg-card/80 hover:scale-105 transition-all duration-300 flex items-center gap-2">
               <Play className="w-4 h-4 fill-current" />
               Watch Trailer
             </button>

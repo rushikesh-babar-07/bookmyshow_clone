@@ -68,7 +68,7 @@
 
 @layer components {
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-glass-border rounded-xl;
+    @apply bg-card/60 backdrop-blur-xl border border-glass-border rounded-2xl shadow-lg shadow-black/20;
   }
 
   .gold-gradient {
