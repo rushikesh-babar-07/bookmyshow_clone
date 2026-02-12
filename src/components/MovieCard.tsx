@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, Ticket, Film } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -25,6 +26,7 @@ interface MovieCardProps {
 const MovieCard = ({ movie, index }: MovieCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const navigate = useNavigate();
   const gradient = fallbackGradients[movie.id % fallbackGradients.length];
 
   return (
@@ -94,7 +96,10 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
 
           {/* Book Button on hover */}
           <div className="absolute bottom-4 left-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-            <button className="w-full gold-gradient text-primary-foreground py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg">
+            <button
+              onClick={() => navigate(`/book/${movie.id}`)}
+              className="w-full gold-gradient text-primary-foreground py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg"
+            >
               <Ticket className="w-4 h-4" />
               Book Tickets
             </button>

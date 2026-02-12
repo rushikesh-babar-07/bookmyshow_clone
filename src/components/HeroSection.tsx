@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Play, Star, Ticket } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative h-[80vh] md:h-[85vh] min-h-[550px] overflow-hidden">
       <motion.img
@@ -39,7 +41,7 @@ const HeroSection = () => {
           </p>
 
           <div className="flex items-center gap-4">
-            <button className="gold-gradient text-primary-foreground px-8 py-3 rounded-full text-base font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 glow-gold flex items-center gap-2">
+            <button onClick={() => navigate("/book/1")} className="gold-gradient text-primary-foreground px-8 py-3 rounded-full text-base font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 glow-gold flex items-center gap-2">
               <Ticket className="w-5 h-5" />
               Book Tickets
             </button>
