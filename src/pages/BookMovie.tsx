@@ -171,37 +171,37 @@ const BookMovie = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.08 }}
-                    className="glass-card p-5 sm:p-6"
+                    className="glass-card p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
-                      <div>
-                        <h3 className="font-display text-lg font-semibold text-foreground">{theater.name}</h3>
-                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
-                          <MapPin className="w-3.5 h-3.5 text-primary" />
-                          {theater.location} — {theater.address}
-                        </div>
-                      </div>
+                       <div>
+                         <h3 className="font-display text-xl font-bold text-foreground tracking-tight">{theater.name}</h3>
+                         <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-2 font-medium">
+                           <MapPin className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                           <span>{theater.location} — {theater.address}</span>
+                         </div>
+                       </div>
                       <span className="text-xs text-muted-foreground bg-secondary px-3 py-1 rounded-full self-start">
                         {theater.screen_count} screens
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap gap-3">
-                      {sts.map((st: any) => {
-                        const timeStr = st.show_time.slice(0, 5);
-                        const isSelected = selectedShowtime === st.id;
-                        return (
-                          <motion.button
-                            key={st.id}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.97 }}
-                            onClick={() => setSelectedShowtime(isSelected ? null : st.id)}
-                            className={`flex flex-col items-center gap-1 px-4 py-3 rounded-xl border transition-all duration-300 ${
-                              isSelected
-                                ? "border-primary bg-primary/10 glow-gold"
-                                : "border-border bg-secondary/50 hover:border-primary/40"
-                            }`}
-                          >
+                    <div className="flex flex-wrap gap-4">
+                       {sts.map((st: any) => {
+                         const timeStr = st.show_time.slice(0, 5);
+                         const isSelected = selectedShowtime === st.id;
+                         return (
+                           <motion.button
+                             key={st.id}
+                             whileHover={{ scale: 1.05 }}
+                             whileTap={{ scale: 0.97 }}
+                             onClick={() => setSelectedShowtime(isSelected ? null : st.id)}
+                             className={`flex flex-col items-center gap-1 px-4 py-3 rounded-xl border transition-all duration-300 ${
+                               isSelected
+                                 ? "border-primary bg-primary/10 glow-gold shadow-lg"
+                                 : "border-border bg-secondary/50 hover:border-primary/60 hover:bg-secondary/70 hover:shadow-md"
+                             }`}
+                           >
                             <div className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
                               <Clock className="w-3.5 h-3.5" />
                               {timeStr}
