@@ -19,6 +19,7 @@ export type Database = {
           created_at: string
           id: string
           num_tickets: number
+          selected_seats: string[] | null
           showtime_id: string
           status: string
           total_price: number
@@ -28,6 +29,7 @@ export type Database = {
           created_at?: string
           id?: string
           num_tickets?: number
+          selected_seats?: string[] | null
           showtime_id: string
           status?: string
           total_price: number
@@ -37,6 +39,7 @@ export type Database = {
           created_at?: string
           id?: string
           num_tickets?: number
+          selected_seats?: string[] | null
           showtime_id?: string
           status?: string
           total_price?: number

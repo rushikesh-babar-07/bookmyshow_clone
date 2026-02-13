@@ -1,7 +1,7 @@
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, CheckCircle, Ticket } from "lucide-react";
+import { ArrowLeft, CheckCircle, Ticket, Flame } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { trendingMovies, recommendedMovies } from "@/data/movies";
@@ -65,6 +65,25 @@ const SeatSelection = () => {
         : [...prev, seatLabel]
     );
   };
+
+  const hotSeats = useMemo(() => {
+    if (!bookedSeats.length) return new Set<string>();
+    
+    const availableSeats = new Set<string>();
+    ROWS.forEach((row) => {
+      for (let seatIdx = 0; seatIdx < SEATS_PER_ROW; seatIdx++) {
+        const seatLabel = `${row}${seatIdx + 1}`;
+        if (!bookedSeats.includes(seatLabel)) {
+          availableSeats.add(seatLabel);
+        }
+      }
+    });
+
+    // Randomly mark 15-25% of available seats as hot
+    const hotCount = Math.ceil(availableSeats.size * (0.15 + Math.random() * 0.1));
+    const hotSeatArray = Array.from(availableSeats).sort(() => Math.random() - 0.5).slice(0, hotCount);
+    return new Set(hotSeatArray);
+  }, [bookedSeats]);
 
   const totalPrice = useMemo(
     () => selectedSeats.length * (showtime?.price || 250),
@@ -180,32 +199,35 @@ const SeatSelection = () => {
                   <div key={row} className="flex items-center gap-1">
                     <span className="w-6 text-xs text-muted-foreground font-semibold text-right mr-1">{row}</span>
                     {Array.from({ length: SEATS_PER_ROW }, (_, seatIdx) => {
-                      const seatLabel = `${row}${seatIdx + 1}`;
-                      const isBooked = bookedSeats.includes(seatLabel);
-                      const isSelected = selectedSeats.includes(seatLabel);
-                      const hasAisle = AISLE_AFTER.includes(seatIdx);
+                       const seatLabel = `${row}${seatIdx + 1}`;
+                       const isBooked = bookedSeats.includes(seatLabel);
+                       const isSelected = selectedSeats.includes(seatLabel);
+                       const isHot = hotSeats.has(seatLabel);
+                       const hasAisle = AISLE_AFTER.includes(seatIdx);
 
-                      return (
-                        <span key={seatLabel} className={hasAisle ? "mr-3" : ""}>
-                          <motion.button
-                            whileHover={!isBooked ? { scale: 1.15 } : {}}
-                            whileTap={!isBooked ? { scale: 0.9 } : {}}
-                            disabled={isBooked}
-                            onClick={() => toggleSeat(seatLabel)}
-                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-md text-[10px] sm:text-xs font-medium transition-all duration-200
-                              ${isBooked
-                                ? "bg-muted/60 text-muted-foreground/40 cursor-not-allowed"
-                                : isSelected
-                                  ? "gold-gradient text-primary-foreground shadow-md glow-gold"
-                                  : "border border-border bg-secondary/40 text-secondary-foreground hover:border-primary/60 hover:bg-secondary/70 cursor-pointer"
-                              }`}
-                            title={isBooked ? "Booked" : seatLabel}
-                          >
-                            {seatIdx + 1}
-                          </motion.button>
-                        </span>
-                      );
-                    })}
+                       return (
+                         <span key={seatLabel} className={hasAisle ? "mr-3" : ""}>
+                           <motion.button
+                             whileHover={!isBooked ? { scale: 1.15 } : {}}
+                             whileTap={!isBooked ? { scale: 0.9 } : {}}
+                             disabled={isBooked}
+                             onClick={() => toggleSeat(seatLabel)}
+                             className={`w-7 h-7 sm:w-8 sm:h-8 rounded-md text-[10px] sm:text-xs font-medium transition-all duration-200 flex items-center justify-center
+                               ${isBooked
+                                 ? "bg-muted/60 text-muted-foreground/40 cursor-not-allowed"
+                                 : isSelected
+                                   ? "gold-gradient text-primary-foreground shadow-md glow-gold"
+                                   : isHot
+                                     ? "border-2 border-primary bg-secondary/40 text-secondary-foreground hover:border-primary hover:bg-secondary/70 cursor-pointer shadow-md"
+                                     : "border border-border bg-secondary/40 text-secondary-foreground hover:border-primary/60 hover:bg-secondary/70 cursor-pointer"
+                               }`}
+                             title={isBooked ? "Booked" : isHot ? "Hot Seat - Limited Availability" : seatLabel}
+                           >
+                             {isHot && !isSelected ? <Flame className="w-3 h-3" /> : seatIdx + 1}
+                           </motion.button>
+                         </span>
+                       );
+                     })}
                     <span className="w-6 text-xs text-muted-foreground font-semibold ml-1">{row}</span>
                   </div>
                 ))}
@@ -213,10 +235,16 @@ const SeatSelection = () => {
             )}
 
             {/* Legend */}
-            <div className="flex justify-center gap-6 mb-6 text-xs text-muted-foreground">
+            <div className="flex flex-wrap justify-center gap-6 mb-6 text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-md border border-border bg-secondary/40" />
                 <span>Available</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded-md border-2 border-primary bg-secondary/40 flex items-center justify-center">
+                  <Flame className="w-2.5 h-2.5 text-primary" />
+                </div>
+                <span>Hot Seats</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-md gold-gradient" />
