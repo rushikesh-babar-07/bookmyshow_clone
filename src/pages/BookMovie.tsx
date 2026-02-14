@@ -41,7 +41,7 @@ const BookMovie = () => {
 
   if (!movie) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen page-gradient">
         <Navbar />
         <div className="container mx-auto px-4 pt-24 text-center">
           <p className="text-muted-foreground text-lg">Movie not found.</p>
@@ -52,7 +52,7 @@ const BookMovie = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen page-gradient">
       <Navbar />
       <div className="container mx-auto px-4 pt-24 pb-12">
         {/* Header */}

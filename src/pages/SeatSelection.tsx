@@ -112,7 +112,7 @@ const SeatSelection = () => {
 
   if (!movie || !showtimeId) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen page-gradient">
         <Navbar />
         <div className="container mx-auto px-4 pt-24 text-center">
           <p className="text-muted-foreground text-lg">Invalid selection.</p>
@@ -123,7 +123,7 @@ const SeatSelection = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen page-gradient">
       <Navbar />
       <div className="container mx-auto px-4 pt-24 pb-32">
         {/* Header */}
@@ -189,12 +189,12 @@ const SeatSelection = () => {
                              onClick={() => toggleSeat(seatLabel)}
                              className={`w-7 h-7 sm:w-8 sm:h-8 rounded-md text-[10px] sm:text-xs font-medium transition-all duration-200 flex items-center justify-center
                                ${isBooked
-                                 ? "bg-muted/60 text-muted-foreground/40 cursor-not-allowed"
+                                 ? "bg-muted/40 text-muted-foreground/30 cursor-not-allowed"
                                  : isSelected
-                                   ? "gold-gradient text-primary-foreground shadow-md glow-gold"
+                                   ? "gold-gradient text-primary-foreground shadow-lg glow-gold"
                                    : isHot
-                                     ? "border-2 border-primary bg-secondary/40 text-secondary-foreground hover:border-primary hover:bg-secondary/70 cursor-pointer shadow-md"
-                                     : "border border-border bg-secondary/40 text-secondary-foreground hover:border-primary/60 hover:bg-secondary/70 cursor-pointer"
+                                     ? "border-2 border-gold-glow bg-gold-glow/10 text-gold-glow hover:bg-gold-glow/20 cursor-pointer shadow-md"
+                                     : "border border-border bg-secondary/60 text-secondary-foreground hover:border-muted-foreground hover:bg-secondary cursor-pointer"
                                }`}
                              title={isBooked ? "Booked" : isHot ? "Hot Seat - Limited Availability" : seatLabel}
                            >
@@ -212,13 +212,13 @@ const SeatSelection = () => {
             {/* Legend */}
             <div className="flex flex-wrap justify-center gap-6 mb-6 text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-md border border-border bg-secondary/40" />
+                <div className="w-5 h-5 rounded-md border border-border bg-secondary/60" />
                 <span>Available</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-md border-2 border-primary bg-secondary/40 flex items-center justify-center">
-                  <Flame className="w-2.5 h-2.5 text-primary" />
-                </div>
+               <div className="w-5 h-5 rounded-md border-2 border-gold-glow bg-gold-glow/10 flex items-center justify-center">
+                 <Flame className="w-2.5 h-2.5 text-gold-glow" />
+               </div>
                 <span>Hot Seats</span>
               </div>
               <div className="flex items-center gap-2">
@@ -226,7 +226,7 @@ const SeatSelection = () => {
                 <span>Selected</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-md bg-muted/60" />
+                <div className="w-5 h-5 rounded-md bg-muted/40" />
                 <span>Booked</span>
               </div>
             </div>
