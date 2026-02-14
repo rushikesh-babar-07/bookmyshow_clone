@@ -38,7 +38,7 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
       whileHover={{ y: -8 }}
       className="group relative"
     >
-      <div className="glass-card overflow-hidden transition-all duration-500 hover:glow-gold hover:border-primary/30">
+      <div className="glass-card overflow-hidden transition-all duration-500 hover:glow-gold hover:border-gold-glow/30 hover:shadow-xl">
         {/* Poster */}
         <div className="relative aspect-[2/3] overflow-hidden">
           {/* Loading skeleton */}

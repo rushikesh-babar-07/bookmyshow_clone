@@ -1,7 +1,7 @@
 import { Ticket } from "lucide-react";
 
 const Footer = () => (
-  <footer className="border-t border-border/50 py-10 mt-10">
+  <footer className="border-t border-border/30 py-10 mt-10 bg-background/50">
     <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
       <div className="flex items-center gap-2">
         <div className="gold-gradient p-1.5 rounded-md">

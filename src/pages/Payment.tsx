@@ -86,7 +86,7 @@ const Payment = () => {
 
   if (!bookingId) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen page-gradient">
         <Navbar />
         <div className="container mx-auto px-4 pt-24 text-center">
           <p className="text-muted-foreground text-lg">Invalid booking.</p>
@@ -97,7 +97,7 @@ const Payment = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen page-gradient">
       <Navbar />
       <div className="container mx-auto px-4 pt-24 pb-16 max-w-2xl">
         <AnimatePresence mode="wait">

@@ -47,7 +47,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen page-gradient flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ const Auth = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 gold-gradient text-primary-foreground rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-60"
+              className="w-full h-11 gold-gradient text-primary-foreground rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 hover:scale-[1.02] transition-all duration-300 glow-gold disabled:opacity-60"
             >
               {loading ? "Please wait..." : isSignUp ? "Sign Up" : "Sign In"}
               {!loading && <ArrowRight className="w-4 h-4" />}
