@@ -1,12 +1,11 @@
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, CheckCircle, Ticket, Flame } from "lucide-react";
+import { ArrowLeft, Ticket, Flame } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { trendingMovies, recommendedMovies } from "@/data/movies";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/hooks/use-toast";
 import { useState, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 
@@ -22,10 +21,9 @@ const SeatSelection = () => {
   const showtimeId = searchParams.get("showtime");
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-  const [bookingSuccess, setBookingSuccess] = useState(false);
+  
 
   const movie = allMovies.find((m) => m.id === Number(movieId));
 
@@ -92,23 +90,23 @@ const SeatSelection = () => {
 
   const bookMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await (supabase as any).from("bookings").insert({
+      const { data, error } = await (supabase as any).from("bookings").insert({
         showtime_id: showtimeId,
         user_id: user!.id,
         num_tickets: selectedSeats.length,
         total_price: totalPrice,
         selected_seats: selectedSeats,
         status: "Pending",
-      });
+      }).select("id").single();
       if (error) throw error;
+      return data.id;
     },
-    onSuccess: () => {
-      setBookingSuccess(true);
+    onSuccess: (bookingId: string) => {
       queryClient.invalidateQueries({ queryKey: ["booked-seats", showtimeId] });
-      toast({ title: "Booking Confirmed!", description: `${selectedSeats.length} seat(s) booked successfully.` });
+      navigate(`/payment?booking=${bookingId}`);
     },
-    onError: () => {
-      toast({ title: "Booking Failed", description: "Something went wrong. Please try again.", variant: "destructive" });
+    onError: (error: any) => {
+      console.error("Booking failed:", error);
     },
   });
 
@@ -144,31 +142,8 @@ const SeatSelection = () => {
           )}
         </motion.div>
 
-        {/* Success */}
-        <AnimatePresence>
-          {bookingSuccess && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="glass-card p-8 text-center"
-            >
-              <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
-              <h2 className="font-display text-2xl font-bold text-foreground mb-2">Seats Booked!</h2>
-              <p className="text-muted-foreground mb-2">
-                Seats: <span className="text-foreground font-semibold">{selectedSeats.sort().join(", ")}</span>
-              </p>
-              <p className="text-muted-foreground mb-6">Status: Pending</p>
-              <button
-                onClick={() => navigate("/")}
-                className="gold-gradient text-primary-foreground px-6 py-2.5 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                Back to Home
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
-        {!bookingSuccess && (
+        {true && (
           <>
             {/* Screen indicator */}
             <motion.div
