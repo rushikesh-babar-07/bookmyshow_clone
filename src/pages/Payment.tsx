@@ -159,12 +159,20 @@ const Payment = () => {
                 </div>
               </div>
 
-              <button
-                onClick={() => navigate("/")}
-                className="gold-gradient text-primary-foreground px-8 py-3 rounded-full text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 glow-gold"
-              >
-                Back to Home
-              </button>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => navigate(`/ticket/${bookingId}`)}
+                  className="gold-gradient text-primary-foreground px-8 py-3 rounded-full text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 glow-gold"
+                >
+                  View Ticket
+                </button>
+                <button
+                  onClick={() => navigate("/")}
+                  className="bg-secondary text-secondary-foreground px-8 py-3 rounded-full text-sm font-semibold hover:bg-muted transition-colors"
+                >
+                  Back to Home
+                </button>
+              </div>
             </motion.div>
           ) : (
             /* ─── Payment Screen ─── */

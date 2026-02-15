@@ -1,11 +1,15 @@
-import { Search, Ticket, LogOut, UserCircle } from "lucide-react";
+import { Search, Ticket, LogOut, ChevronDown, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+
+const cities = ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune"];
 
 const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("Mumbai");
+  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -25,13 +29,51 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-2xl border-0 border-b border-border/40"
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <div className="flex items-center gap-2">
-          <div className="gold-gradient p-2 rounded-lg">
-            <Ticket className="w-5 h-5 text-primary-foreground" />
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
+            <div className="gold-gradient p-2 rounded-lg">
+              <Ticket className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <span className="font-display text-xl font-bold text-foreground">
+              Cine<span className="text-gold-gradient">Vault</span>
+            </span>
           </div>
-          <span className="font-display text-xl font-bold text-foreground">
-            Cine<span className="text-gold-gradient">Vault</span>
-          </span>
+
+          {/* City Selector */}
+          <div className="relative hidden sm:block">
+            <button
+              onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-2.5 py-1.5 rounded-full bg-secondary/60 hover:bg-secondary"
+            >
+              <MapPin className="w-3.5 h-3.5 text-primary" />
+              <span className="font-medium">{selectedCity}</span>
+              <ChevronDown className="w-3 h-3" />
+            </button>
+            <AnimatePresence>
+              {cityDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  className="absolute top-full left-0 mt-1 w-40 glass-card p-1.5 z-50"
+                >
+                  {cities.map((city) => (
+                    <button
+                      key={city}
+                      onClick={() => { setSelectedCity(city); setCityDropdownOpen(false); }}
+                      className={`w-full text-left text-sm px-3 py-2 rounded-lg transition-colors ${
+                        selectedCity === city
+                          ? "text-primary font-semibold bg-primary/10"
+                          : "text-foreground hover:bg-secondary"
+                      }`}
+                    >
+                      {city}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         <div className="hidden md:flex items-center gap-8">
@@ -63,6 +105,13 @@ const Navbar = () => {
           </motion.div>
           {user ? (
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate("/my-bookings")}
+                className="hidden sm:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-full bg-secondary/60 hover:bg-secondary"
+              >
+                <Ticket className="w-3.5 h-3.5" />
+                <span className="font-medium">My Tickets</span>
+              </button>
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary">
                 <div className="w-7 h-7 rounded-full gold-gradient flex items-center justify-center text-primary-foreground text-xs font-bold">
                   {initials}

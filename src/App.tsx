@@ -10,6 +10,8 @@ import Auth from "./pages/Auth";
 import BookMovie from "./pages/BookMovie";
 import SeatSelection from "./pages/SeatSelection";
 import Payment from "./pages/Payment";
+import MyBookings from "./pages/MyBookings";
+import TicketView from "./pages/TicketView";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,6 +54,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Payment />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-bookings"
+              element={
+                <ProtectedRoute>
+                  <MyBookings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/ticket/:bookingId"
+              element={
+                <ProtectedRoute>
+                  <TicketView />
                 </ProtectedRoute>
               }
             />
