@@ -45,10 +45,10 @@ const HeroSection = () => {
               <Ticket className="w-5 h-5" />
               Book Tickets
             </button>
-            <button className="glass-card px-6 py-3 rounded-full text-foreground text-base font-medium hover:bg-card/80 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+            <a href="https://www.youtube.com/watch?v=Way9Dexny3w" target="_blank" rel="noopener noreferrer" className="glass-card px-6 py-3 rounded-full text-foreground text-base font-medium hover:bg-card/80 hover:scale-105 transition-all duration-300 flex items-center gap-2">
               <Play className="w-4 h-4 fill-current" />
               Watch Trailer
-            </button>
+            </a>
           </div>
         </motion.div>
       </div>

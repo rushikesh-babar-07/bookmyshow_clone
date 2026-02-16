@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Star, Ticket, Film } from "lucide-react";
+import { Star, Ticket, Film, Play } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Movie } from "@/data/movies";
 
@@ -95,7 +95,7 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
           </motion.div>
 
           {/* Book Button on hover */}
-          <div className="absolute bottom-4 left-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+          <div className="absolute bottom-4 left-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 flex flex-col gap-2">
             <button
               onClick={() => navigate(`/book/${movie.id}`)}
               className="w-full gold-gradient text-primary-foreground py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg"
@@ -103,6 +103,16 @@ const MovieCard = ({ movie, index }: MovieCardProps) => {
               <Ticket className="w-4 h-4" />
               Book Tickets
             </button>
+            <a
+              href={movie.trailerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="w-full glass-card py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 text-foreground hover:bg-card/80 hover:scale-105 transition-all duration-300"
+            >
+              <Play className="w-3.5 h-3.5 fill-current" />
+              Watch Trailer
+            </a>
           </div>
         </div>
 
