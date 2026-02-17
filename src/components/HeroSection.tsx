@@ -26,18 +26,18 @@ const HeroSection = () => {
         >
           <div className="flex items-center gap-3 mb-4">
             <span className="rating-badge rating-high">
-              <Star className="w-3 h-3 fill-current" /> 9.1
+              <Star className="w-3 h-3 fill-current" /> 8.4
             </span>
-            <span className="text-sm text-muted-foreground">2h 45m</span>
+            <span className="text-sm text-muted-foreground">3h 01m</span>
             <span className="text-sm text-muted-foreground">•</span>
-            <span className="text-sm text-muted-foreground">Sci-Fi, Adventure</span>
+            <span className="text-sm text-muted-foreground">Action, Sci-Fi</span>
           </div>
 
           <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-4 leading-tight">
-            Dune: Part Two
+            Avengers: Endgame
           </h1>
           <p className="text-muted-foreground text-lg mb-8 max-w-lg">
-            Paul Atreides unites with the Fremen to take on the galaxy's most powerful forces in this epic continuation of the saga.
+            The Avengers assemble one final time to undo Thanos' devastation and restore balance to the universe in this epic culmination of the Infinity Saga.
           </p>
 
           <div className="flex items-center gap-4">
@@ -45,7 +45,7 @@ const HeroSection = () => {
               <Ticket className="w-5 h-5" />
               Book Tickets
             </button>
-            <a href="https://www.youtube.com/watch?v=Way9Dexny3w" target="_blank" rel="noopener noreferrer" className="glass-card px-6 py-3 rounded-full text-foreground text-base font-medium hover:bg-card/80 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+            <a href="https://www.youtube.com/watch?v=TcMBFSGVi1c" target="_blank" rel="noopener noreferrer" className="glass-card px-6 py-3 rounded-full text-foreground text-base font-medium hover:bg-card/80 hover:scale-105 transition-all duration-300 flex items-center gap-2">
               <Play className="w-4 h-4 fill-current" />
               Watch Trailer
             </a>
